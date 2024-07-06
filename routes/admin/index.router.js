@@ -1,6 +1,9 @@
 
 const dashboardRoute=require("./dashboard.route");
-
-module.exports.index = (app) => {   
-    app.use("/admin/dashboard",dashboardRoute);
+const productRoute=require("./product.route")
+const systemConfig=require("../../config/system")
+module.exports.index = (app) => { 
+    const part=`/${systemConfig.prefixAdmin}`
+    app.use(`${part}/dashboard`,dashboardRoute);
+    app.use(`${part}/products`,productRoute);
 }
