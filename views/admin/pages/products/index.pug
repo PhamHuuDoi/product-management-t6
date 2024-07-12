@@ -1,51 +1,101 @@
 extends ../../layout/default.pug
-
-
+include ../../mixins/filter-status.pug
+include ../../mixins/pagination.pug
+include ../../mixins/box-actions.pug
 block main
+  if (messages.success)
+    div(
+      class="alert alert-success show-alert"
+      show-alert="3000"
+    ) #{messages.success}
   h1(class="mb-4") Quản lý sản phẩm
    .card.mb-3
     .card-header Bộ lọc và Tìm kiếm
     .card-body
-      button(
-        class="btn btn-sm ml-1 btn-outline-success active"
-      ) Tất cả
-      button(
-        class="btn btn-sm ml-1 btn-outline-success"
-      ) Hoạt động
-      button(
-        class="btn btn-sm ml-1 btn-outline-success"
-      ) Dừng hoạt độn
+      .row
+        .col-6
+          +filter-status(filterStatus)
+        .col-6
+          form(form-search="")
+            .input-group
+              input(
+                type="text"
+                placeholder="Nhập từ khóa"
+                name="keyword"
+                class="from-control"
+                value=keyword
+              )
+              .input-group-append
+                button(
+                  class="btn btn-success"
+                  type="submit"
+                ) Tìm
+   .card.mb-3
+      .card-header Hành động
+      .card-body
+        +box-actions(`/${prefixAdmin}/products/change-multi`)
 
    .card.mb-3
-        .card-header Danh sách
-        .card-body
-            table.table.table-hover.table-sm
-                thead
-                    tr
-                        th STT
-                        th Hình ảnh
-                        th Tiêu đề
-                        th Giá
-                        th Trạng thái
-                        th Hành độn
-                    tbody
-                        each item, index in products
-                            tr 
-                            td #{index+1}
-                            td
-                                img(
-                                src=item.thumbnail
-                                alt=item.title
-                                width="80px"
-                                height="auto"
-                                )
-                            td #{item.title}
-                            td #{item.price}$
-                            td
-                                if(item.status == "active")
-                                    a(href="#" class="badge badge-success") Hoạt động
-                                else
-                                    a(href="#" class="badge badge-danger") Dừng hoạt động
-                            td
-                                button(class="btn btn-warning btn-sm") Sửa
-                                button(class="btn btn-danger btn-sm ml-1") Xóa
+      .card-header Danh sách
+      .card-body
+        div(class="text-right mb-2")
+          a(
+            href=`/${prefixAdmin}/products/create`
+            class="btn btn-outline-success"
+            ) + Thêm mới
+        table.table.table-hover.table-sm
+            thead
+                tr
+                    th 
+                      input(name="checkAll" type="checkbox")
+                    th STT
+                    th Hình ảnh
+                    th Tiêu đề
+                    th Giá
+                    th Vị trí
+                    th Trạng thái
+                    th Hành động
+                tbody
+                    each item, index in products
+                        tr 
+                        td
+                          input(
+                            name="checkItem" 
+                            type="checkbox"
+                            value=item.id
+                            )
+                        td #{index+1}
+                        td
+                            img(
+                            src=item.thumbnail
+                            alt=item.title
+                            width="80px"
+                            height="auto"
+                            )
+                        td #{item.title}
+                        td #{item.price}$
+                        td
+                          input(
+                            link=`/${prefixAdmin}/products/change-position/${item.id}`
+                            type="number"
+                            name="position"
+                            value=item.position
+                            style="width: 60px"
+                            min="1"
+                          )
+                        td
+                            if(item.status == "active")
+                                button(link=`/${prefixAdmin}/products/change-status/inactive/${item.id}` 
+                                  class="badge badge-success"
+                                  button-change-status) Hoạt động
+                            else
+                                button(link=`/${prefixAdmin}/products/change-status/active/${item.id}` 
+                                  class="badge badge-danger"
+                                  button-change-status) Dừng hoạt động
+                        td
+                            button(class="btn btn-warning btn-sm") Sửa
+                            button(
+                                  class="btn btn-danger btn-sm ml-1",
+                                  button-deleted=`/${prefixAdmin}/products/delete/${item.id}`
+                                ) Xóa
+  +pagination(pagination)
