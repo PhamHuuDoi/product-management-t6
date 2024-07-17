@@ -46,8 +46,21 @@ module.exports.index=async(req,res)=>{
     filterStatus:filterStatus,
     pagination: pagination
     });
-}     
-
+}
+module.exports.deleteItemForever = async (req, res) => {
+    const id = req.params.id;
+    console.log(`Deleting product with id: ${id}`); // Log ID của sản phẩm
+  
+    try {
+      const result = await Product.deleteOne({ _id: id });
+      console.log(`Delete result: ${JSON.stringify(result)}`); // Log kết quả xóa
+  
+      res.json({ code: 200 });
+    } catch (error) {
+      console.error(`Error deleting product with id ${id}:`, error);
+      res.status(500).json({ code: 500, message: 'Internal Server Error' });
+    }
+  };
 // module.exports.undeleteItem=async(req,res)=>{
 //     const id =req.params.id;
 //     await Product.updateOne({

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const flash=require("express-flash");
 const cookieParser=require("cookie-parser");
 const session=require("express-session");
+const methodOverride=require("method-override");
 
 require('dotenv').config();
 
@@ -17,6 +18,7 @@ const port = process.env.port;
 app.use(cookieParser('HHKALKS'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+app.use(methodOverride('_method'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

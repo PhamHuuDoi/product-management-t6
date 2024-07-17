@@ -12,11 +12,26 @@ module.exports.index = async (req, res) => {
     for(const item of products)
     {
        
-        item.priceNew=(item.price*(1-item.discountPercen/100)).toFixed(0);
+        item.priceNew=(item.price*(1-item.discountPercentage/100)).toFixed(0);
     }
     console.log(products);
     res.render("client/pages/products/index", {
         pageTitle: "Trang danh sach san pham",
         products: products
     });
+}
+module.exports.detail=async (req,res)=>{
+  const slug=req.params.slug;
+  const product=await Product.findOne({
+    slug: slug,
+    deleted: false,
+    status: "active"
+  });
+  if(product){
+    res.render("client/pages/products/detail",{
+      pageTitle:"Chi tiết sản phẩm",
+      product: product
+    });
+  }
+  else res.redirect("/");
 }

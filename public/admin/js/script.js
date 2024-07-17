@@ -209,3 +209,36 @@ if (buttonUndeleted.length > 0) {
     });
   })
 }
+//garbage delete-forever
+const listButtonDeleteForever = document.querySelectorAll("[button-delete-forever]");
+if(listButtonDeleteForever.length > 0) {
+  listButtonDeleteForever.forEach(button => {
+    button.addEventListener("click", () => {
+      const link = button.getAttribute("button-delete-forever");
+      console.log(link);
+      fetch(link, {
+        method: "DELETE"
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == 200) {
+            //window.location.reload();
+            console.log(data.code);
+          }
+        })
+    });
+  });
+}
+// preview anhr;
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage) {
+  const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+  const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+
+  uploadImageInput.addEventListener("change", () => {
+    const file = uploadImageInput.files[0];
+    if(file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+}

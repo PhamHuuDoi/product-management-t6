@@ -3,11 +3,6 @@ include ../../mixins/filter-status.pug
 include ../../mixins/pagination.pug
 include ../../mixins/box-actions.pug
 block main
-  if (messages.success)
-    div(
-      class="alert alert-success show-alert"
-      show-alert="3000"
-    ) #{messages.success}
   h1(class="mb-4") Quản lý sản phẩm
    .card.mb-3
     .card-header Bộ lọc và Tìm kiếm
@@ -93,7 +88,14 @@ block main
                                   class="badge badge-danger"
                                   button-change-status) Dừng hoạt động
                         td
-                            button(class="btn btn-warning btn-sm") Sửa
+                            a(
+                              class="btn btn-info btn-sm"
+                              href=`/${prefixAdmin}/products/detail/${item.id}`
+                              ) Chi tiết
+                            a(
+                              class="btn btn-warning btn-sm"
+                              href=`/${prefixAdmin}/products/edit/${item.id}`
+                            ) Sửa
                             button(
                                   class="btn btn-danger btn-sm ml-1",
                                   button-deleted=`/${prefixAdmin}/products/delete/${item.id}`
