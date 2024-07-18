@@ -11,9 +11,12 @@ const database = require("./config/database");
 const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.router")
 const systemConfig = require("./config/system");
+const path= require('path');
 database.connect();
 const app = express();
 const port = process.env.port;
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 app.use(cookieParser('HHKALKS'));
 app.use(session({ cookie: { maxAge: 60000 }}));

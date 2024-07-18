@@ -29,15 +29,20 @@ module.exports.index = async (req, res) => {
         find.title = regex;
         keyword = req.query.keyword;
     }
-
+    //sap xep
+    const sort={};
+    if(req.query.sortKey &&req.query.sortValue){
+        sort[req.query.sortKey]=req.query.sortValue;
+    }
+    else{
+        sort.position="desc";
+    }
     //page
     const pagination = await paginationHelper(req, find);
     const products = await Product.find(find)
         .limit(pagination.limiItems)
         .skip(pagination.skip)
-        .sort({
-            position: "asc"
-        });
+        .sort(sort);
 
     const { id, statusChange } = req.params;
     res.render("admin/pages/products/index", {
@@ -120,9 +125,6 @@ module.exports.create = async (req, res) => {
  }
 //post creat
 module.exports.createPost=async (req,res)=>{
-    if(req.file &&req.file.filename){
-        req.body.thumbnail=`/uploads/${req.file.filename}`;
-    }
     req.body.price=parseInt(req.body.price);
     req.body.discountPercentage=parseInt(req.body.discountPercentage);
     req.body.stock=parseInt(req.body.stock);
@@ -166,9 +168,6 @@ module.exports.edit = async (req, res) => {
     try {
       const id = req.params.id;
   
-      if(req.file && req.file.filename) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-      }
   
       req.body.price = parseInt(req.body.price);
       req.body.discountPercentage = parseInt(req.body.discountPercentage);

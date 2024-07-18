@@ -151,7 +151,7 @@ if (buttonDeleted.length > 0) {
       })
         .then(res => res.json())
         .then(data => {
-          if(data.code == 200) {
+          if (data.code == 200) {
             window.location.reload();
           }
         })
@@ -159,9 +159,9 @@ if (buttonDeleted.length > 0) {
   })
 }
 // thay doi vi tri
-const listInputPosition=document
-.querySelectorAll("input[name='position']");
-if(listInputPosition.length > 0) {
+const listInputPosition = document
+  .querySelectorAll("input[name='position']");
+if (listInputPosition.length > 0) {
   listInputPosition.forEach(input => {
     input.addEventListener("change", () => {
       const link = input.getAttribute("link");
@@ -183,13 +183,13 @@ if(listInputPosition.length > 0) {
     });
   })
 }
-const showAlert=document.querySelector("[show-alert]");
-if(showAlert){
-  let time=showAlert.getAttribute("show-alert")||3000;
-  time=parseInt(time);
-  setTimeout(()=>{
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert) {
+  let time = showAlert.getAttribute("show-alert") || 3000;
+  time = parseInt(time);
+  setTimeout(() => {
     showAlert.classList.add("hidden");
-  },time);
+  }, time);
 }
 const buttonUndeleted = document.querySelectorAll("[button-undeleted]");
 if (buttonUndeleted.length > 0) {
@@ -202,7 +202,7 @@ if (buttonUndeleted.length > 0) {
       })
         .then(res => res.json())
         .then(data => {
-          if(data.code == 200) {
+          if (data.code == 200) {
             window.location.reload();
           }
         })
@@ -211,7 +211,7 @@ if (buttonUndeleted.length > 0) {
 }
 //garbage delete-forever
 const listButtonDeleteForever = document.querySelectorAll("[button-delete-forever]");
-if(listButtonDeleteForever.length > 0) {
+if (listButtonDeleteForever.length > 0) {
   listButtonDeleteForever.forEach(button => {
     button.addEventListener("click", () => {
       const link = button.getAttribute("button-delete-forever");
@@ -221,7 +221,7 @@ if(listButtonDeleteForever.length > 0) {
       })
         .then(res => res.json())
         .then(data => {
-          if(data.code == 200) {
+          if (data.code == 200) {
             //window.location.reload();
             console.log(data.code);
           }
@@ -231,14 +231,45 @@ if(listButtonDeleteForever.length > 0) {
 }
 // preview anhr;
 const uploadImage = document.querySelector("[upload-image]");
-if(uploadImage) {
+if (uploadImage) {
   const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
   const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
 
   uploadImageInput.addEventListener("change", () => {
     const file = uploadImageInput.files[0];
-    if(file) {
+    if (file) {
       uploadImagePreview.src = URL.createObjectURL(file);
     }
   });
+}
+// sap xep theo yeu cau
+const sort = document.querySelector("[sort]");
+if (sort) {
+  let url = new URL(window.location.href);
+  const select = sort.querySelector("[sort-select]");
+  select.addEventListener("change", () => {
+    const [sortKey, sortValue] = select.value.split("-");
+    if (sortKey && sortValue) {
+      url.searchParams.set("sortKey", sortKey);
+      url.searchParams.set("sortValue", sortValue);
+
+      window.location.href=url.href;
+    }
+  });
+  const defaultSortKey = url.searchParams.get("sortKey");
+  const defaultSortValue = url.searchParams.get("sortValue");
+  if (defaultSortKey && defaultSortValue) {
+    const optionSelected = document.querySelector(`option[value="${defaultSortKey}-${defaultSortValue}"]`);
+    optionSelected.selected = true;
+  }
+
+  const buttonClear = document.querySelector("[sort-clear]");
+  if (buttonClear) {
+    buttonClear.addEventListener("click", () => {
+      url.searchParams.delete("sortKey");
+      url.searchParams.delete("sortValue");
+      window.location.href = url.href;
+    })
+  }
+
 }
