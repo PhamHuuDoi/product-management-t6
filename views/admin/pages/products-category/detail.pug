@@ -1,0 +1,28 @@
+extends ../../layout/default.pug
+include ../../mixins/select-tree.pug
+block  main
+    if(category.title)
+        h1(class="mb-4")  Tên danh mục: #{category.title}
+    if(categories)
+       +parent-title(categories,category.parent_id)
+    
+    if(category.thumbnail)
+        div(class="mb-4")
+            img(
+                src=category.thumbnail
+                style="width: 100px"
+            )
+    
+    if(category.status)
+        div(class="mb-4")
+            span Trạng thái:
+            if (category.status === "active")
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+
+    if(category.position)
+        div(class="mb-4") Vị trí: <b>#{category.position}<b>
+
+    if(category.description) 
+        div(class="mb-4") !{category.description}
