@@ -1,3 +1,4 @@
+include ../mixins/sub-menu.pug
 header.header 
     .container 
         .row.allign-items-center 
@@ -6,10 +7,29 @@ header.header
                     a(href="/")
                         img(src="/images/LOGO.png",alt="logo")
 
-            .col-9 
+            .col-5
+                form(
+                    action="/search"
+                    method="GET"
+                    ) 
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Nhập từ khóa..."
+                            class="form-control"
+                            name="keyword"
+                            value=keyword
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Tìm
+            .col-4
                 .inner-menu 
                     ul 
                         li 
                             a(href="/") Trang chu 
-                        li 
-                            a(href="/product") San pham
+                        li(class="sub-menu")
+                            a(href="/product") Sản phẩm
+                            if(layoutCategoryProducts)
+                                +sub-menu(layoutCategoryProducts)

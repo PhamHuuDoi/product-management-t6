@@ -1,4 +1,13 @@
 extends ../../layout/default.pug
 
 block main 
-    h3 Trang tổng quang
+    h1 Trang tổng quang
+    h2 #{account.fullName}
+    div #{account.phone}
+    div #{account.email}
+    img(
+        src=account.avatar
+        width="150px"
+    )
+    h2 #{role.tile}
+    div #{role.permissions}
