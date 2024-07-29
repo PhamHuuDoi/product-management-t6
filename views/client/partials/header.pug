@@ -30,6 +30,10 @@ header.header
                         li 
                             a(href="/") Trang chu 
                         li(class="sub-menu")
-                            a(href="/product") Sản phẩm
+                            a(href="/products") Sản phẩm
                             if(layoutCategoryProducts)
                                 +sub-menu(layoutCategoryProducts)
+                        li 
+                            a(href="/cart") Giỏ hàng (#{cartTotal})
+                        li 
+                            a(href="/user/register") Đăng ký

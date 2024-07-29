@@ -13,7 +13,7 @@ module.exports.index = async (req, res) => {
 
     item.priceNew = (item.price * (1 - item.discountPercentage / 100)).toFixed(0);
   }
-  console.log(products);
+  //console.log(products);
   res.render("client/pages/products/index", {
     pageTitle: "Trang danh sach san pham",
     products: products
@@ -124,7 +124,7 @@ module.exports.detail = async (req, res) => {
     deleted: false,
     status: "active"
   });
-  product.priceNew = ((1 - product.discountPercentage/100) * product.price).toFixed(0);
+  //product.priceNew = ((1 - product.discountPercentage/100) * product.price).toFixed(0);
   if (product) {
     res.render("client/pages/products/detail", {
       pageTitle: "Chi tiết sản phẩm",

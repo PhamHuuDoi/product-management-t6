@@ -5,6 +5,7 @@ const Product = require("../../models/product.model");
 
 const createTreeHelper = require("../../helpers/createTree.helper");
 module.exports.index=async(req,res)=>{
+   
     const records=await ProductCategory.find({
         deleted: false
     });

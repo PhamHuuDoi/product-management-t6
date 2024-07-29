@@ -24,10 +24,10 @@ block main
             name="parent_id"
             class="form-control"
             id="parent_id"
-        )
+          )
             option(value="") -- Chọn danh mục cha --
             if(categories)
-              +select-tree(categories, 1, product.product_parent_id)
+              +select-tree(categories, 1, product.product_category_id)
     div(class="form-group form-check form-check-inline")
       input(
         type="radio"

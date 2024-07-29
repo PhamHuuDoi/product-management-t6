@@ -13,13 +13,13 @@ const authMiddleware=require("../../middlewares/admin/auth.middlewares");
 module.exports.index = (app) => { 
     const part=`/${systemConfig.prefixAdmin}`
     app.use(`${part}/auth`,authRoute);
-    app.use(authMiddleware.requireAuth);
-    app.use(`${part}/dashboard`,dashboardRoute);
-    app.use(`${part}/products`, productRoute);
-    app.use(`${part}/garbage`,garbageRoute);
-    app.use(`${part}/`,productCategoryRoute);
-    app.use(`${part}/products-category`,productCategoryRoute);
-    app.use(`${part}/roles`,rolesRoute);
-    app.use(`${part}/accounts`,accountRoute);
-    app.use(`${part}/profile`,profileRoute); 
+    //app.use(authMiddleware.requireAuth);
+    app.use(`${part}/dashboard`,authMiddleware.requireAuth,dashboardRoute);
+    app.use(`${part}/products`, authMiddleware.requireAuth,productRoute);
+    app.use(`${part}/garbage`,authMiddleware.requireAuth,garbageRoute);
+    app.use(`${part}/`,authMiddleware.requireAuth,productCategoryRoute);
+    app.use(`${part}/products-category`,authMiddleware.requireAuth,productCategoryRoute);
+    app.use(`${part}/roles`,authMiddleware.requireAuth,rolesRoute);
+    app.use(`${part}/accounts`,authMiddleware.requireAuth,accountRoute);
+    app.use(`${part}/profile`,authMiddleware.requireAuth,profileRoute); 
 }
